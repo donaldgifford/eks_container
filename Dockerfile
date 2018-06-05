@@ -11,8 +11,8 @@ RUN apt-get update -y && apt-get install awscli curl wget git -y
 
 
 #Install AWS EKS
-RUN curl -O https://amazon-eks.s3-us-west-2.amazonaws.com/2018-04-04/eks-2017-11-01.normal.json
-RUN aws configure add-model --service-model file://eks-2017-11-01.normal.json --service-name eks
+#RUN curl -O https://amazon-eks.s3-us-west-2.amazonaws.com/2018-04-04/eks-2017-11-01.normal.json
+#RUN aws configure add-model --service-model file://eks-2017-11-01.normal.json --service-name eks
 
 #Install kubectl
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
@@ -26,7 +26,9 @@ RUN mv go /usr/local
 
 
 # Install helm
-RUN mv /root/linux-amd64/helm /usr/local/bin/helm
+RUN wget https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
+RUN tar -xvf helm-v2.9.1-linux-amd64.tar.gz
+RUN mv linux-amd64/helm /usr/local/bin/helm
 
 #Install heptio authenticator
 RUN go get -u -v github.com/heptio/authenticator/cmd/heptio-authenticator-aws
