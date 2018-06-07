@@ -7,7 +7,8 @@ ENV  DEBIAN_FRONTEND=noninteractive
 
 COPY . /root/.
 
-RUN apt-get update -y && apt-get install awscli curl wget git -y
+RUN apt-get update -y && apt-get install python-pip curl wget git vim -y
+RUN pip install awscli
 
 
 #Install AWS EKS
