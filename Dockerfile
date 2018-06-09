@@ -7,10 +7,7 @@ ARG GO_VERSION=go1.10.1
 
 
 RUN apt-get update -y && \
-    apt-get install -y curl python-pip git && \
-    #Install aws cli
-    pip install awscli && \
-    pip list --format columns && \
+    apt-get install -y curl git && \
     #Install kubectl & friends
     curl -sL https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
     curl -sL https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -o /usr/local/bin/kctx && \
@@ -24,11 +21,10 @@ RUN apt-get update -y && \
     # Install heptio authenticator
     GOROOT=/tmp/go GOPATH=/usr/local /tmp/go/bin/go get -u -v github.com/heptio/authenticator/cmd/heptio-authenticator-aws && \
     # clean up
-    apt-get remove -y git && \
+    apt-get remove -y curl git && \
     apt autoremove -y && \
     rm -rf /linux-amd64 /var/lib/apt/lists/* /var/lib/dpkg/info/* /usr/local/src/* /tmp/* && \
     # verify
-    aws --version && \
     helm version --client --short && \
     kubectl version --client --short
 
