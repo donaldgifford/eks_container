@@ -7,7 +7,7 @@ ARG GO_VERSION=go1.10.1
 
 
 RUN apt-get update -y && \
-    apt-get install -y curl git && \
+    apt-get install -y curl git vim && \
     #Install kubectl & friends
     curl -sL https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
     curl -sL https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -o /usr/local/bin/kctx && \
