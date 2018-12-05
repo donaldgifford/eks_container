@@ -4,6 +4,8 @@ FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
 ARG HELM_VERSION=v2.9.1
 ARG GO_VERSION=go1.10.1
+ARG GOROOT=/tmp/go 
+ARG GOPATH=/usr/local
 
 
 RUN apt-get update -y && \
@@ -19,10 +21,12 @@ RUN apt-get update -y && \
     # install golang
     curl -sL https://dl.google.com/go/${GO_VERSION}.linux-amd64.tar.gz | tar zxvf - -C /tmp && \
     # Install heptio authenticator
-    GOROOT=/tmp/go GOPATH=/usr/local /tmp/go/bin/go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authenticator && \
+     /tmp/go/bin/go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authenticator && \
     # install helm registry
     mkdir -p ~/.helm/plugins/ && \
-    cd ~/.helm/plugins/ && git clone https://github.com/app-registry/appr-helm-plugin.git registry && \
+    cd ~/.helm/plugins/ && git clone https://github.com/app-registry/appr-helm-plugin.git registry &&\
+  # Install helmfile
+    /tmp/go/bin/go get -u -v github.com/roboll/helmfile &&\
     # clean up
     apt-get remove -y curl git && \
     apt autoremove -y && \
@@ -30,6 +34,7 @@ RUN apt-get update -y && \
     # verify
     helm version --client --short && \
     helm registry --help && \
+    helmfile --version && \
     kubectl version --client --short
 
 
