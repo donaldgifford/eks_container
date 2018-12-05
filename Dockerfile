@@ -19,7 +19,7 @@ RUN apt-get update -y && \
     # install golang
     curl -sL https://dl.google.com/go/${GO_VERSION}.linux-amd64.tar.gz | tar zxvf - -C /tmp && \
     # Install heptio authenticator
-    GOROOT=/tmp/go GOPATH=/usr/local /tmp/go/bin/go get -u -v github.com/heptio/authenticator/cmd/heptio-authenticator-aws && \
+    GOROOT=/tmp/go GOPATH=/usr/local /tmp/go/bin/go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authenticator && \
     # install helm registry
     mkdir -p ~/.helm/plugins/ && \
     cd ~/.helm/plugins/ && git clone https://github.com/app-registry/appr-helm-plugin.git registry && \
