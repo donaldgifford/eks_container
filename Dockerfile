@@ -11,10 +11,10 @@ ARG GOPATH=/usr/local
 
 
 RUN apt-get update -y && \
-    apt-get install -y curl wget git vim
+    apt-get install -y curl wget git vim &&\
 
     #Install kubectl & friends
-RUN    curl -sL https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
+    curl -sL https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
     curl -sL https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -o /usr/local/bin/kctx && \
     curl -sL https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens -o  /usr/local/bin/kns && \
     curl -sL https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 -o  /usr/local/bin/helmfile && \
@@ -29,10 +29,10 @@ RUN    curl -sL https://storage.googleapis.com/kubernetes-release/release/$(curl
      /tmp/go/bin/go get -u -v github.com/kubernetes-sigs/aws-iam-authenticator/cmd/aws-iam-authenticator && \
     # install helm registry
     mkdir -p ~/.helm/plugins/ && \
-    cd ~/.helm/plugins/ && git clone https://github.com/app-registry/appr-helm-plugin.git registry
+    cd ~/.helm/plugins/ && git clone https://github.com/app-registry/appr-helm-plugin.git registry &&\
 
     # Install helm diff
-RUN    helm plugin install https://github.com/databus23/helm-diff --version $HELM_DIFF_VERSION &&\
+    helm plugin install https://github.com/databus23/helm-diff --version $HELM_DIFF_VERSION &&\
     # clean up
     apt-get remove -y curl git && \
     apt autoremove -y && \
